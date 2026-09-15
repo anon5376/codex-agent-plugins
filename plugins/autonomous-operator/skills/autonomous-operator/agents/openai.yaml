@@ -1,0 +1,4 @@
+interface:
+  display_name: "Autonomous Operator"
+  short_description: "Prepare and run a scoped autonomous work mission."
+  default_prompt: "Use $autonomous-operator to prepare and execute my scoped mission."

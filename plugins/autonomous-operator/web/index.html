@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Autonomous Operator | Operate</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="wordmark" href="/" aria-label="Autonomous Operator home">Autonomous Operator</a>
+      <span class="mode-chip">Operate</span>
+      <span class="topbar-note">Local mission form</span>
+    </div>
+  </header>
+
+  <main id="app" class="app-shell" data-state="loading">
+    <section id="boot-state" class="boot-state" aria-live="polite">
+      <p class="eyebrow">OPERATE</p>
+      <h1>Prepare a mission</h1>
+      <p>Loading the local operator configuration.</p>
+    </section>
+
+    <section id="backend-error" class="backend-error" hidden role="alert" aria-live="assertive">
+      <p class="eyebrow">BACKEND ERROR</p>
+      <h1>The local operator is unavailable</h1>
+      <p id="backend-error-message">Check the local server and reload this page.</p>
+    </section>
+
+    <form id="mission-form" class="workspace" novalidate hidden>
+      <div class="editor-column">
+        <div class="page-intro">
+          <p class="eyebrow">OPERATE</p>
+          <h1>Prepare a mission</h1>
+          <p class="lede">Turn a concrete objective into a reviewable prompt for the local operator.</p>
+        </div>
+
+        <div id="form-status" class="form-status" data-state="ready" role="status" aria-live="polite">
+          Configuration loaded. Describe the work you want prepared.
+        </div>
+
+        <section class="form-section mission-section" aria-labelledby="mission-heading">
+          <div class="section-heading">
+            <p class="section-kicker">01</p>
+            <h2 id="mission-heading">Mission</h2>
+            <p>Start with the result you need. The project path must be an existing absolute directory on this Mac.</p>
+          </div>
+
+          <div class="field-stack">
+            <div class="field field-primary">
+              <label for="objective">Objective <span class="required-mark" aria-hidden="true">*</span></label>
+              <textarea id="objective" name="objective" rows="6" maxlength="16000" required aria-describedby="objective-help objective-error" placeholder="What should the operator accomplish?"></textarea>
+              <p id="objective-help" class="field-help">State the work and the decision or artifact it should produce.</p>
+              <p id="objective-error" class="field-error" data-error="objective" role="alert"></p>
+            </div>
+
+            <div class="field-grid two-up">
+              <div class="field">
+                <label for="title">Short title</label>
+                <input id="title" name="title" type="text" maxlength="120" aria-describedby="title-help title-error" placeholder="Optional mission name">
+                <p id="title-help" class="field-help">Optional. A short fallback is derived from the objective when blank.</p>
+                <p id="title-error" class="field-error" data-error="title" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="project_path">Project path <span class="required-mark" aria-hidden="true">*</span></label>
+                <input id="project_path" name="project_path" type="text" inputmode="url" required aria-describedby="project-path-help project-path-error" placeholder="/Users/you/Projects/Your project">
+                <p id="project-path-help" class="field-help">Absolute path to the project directory.</p>
+                <p id="project-path-error" class="field-error" data-error="project_path" role="alert"></p>
+              </div>
+            </div>
+
+            <fieldset class="field work-type-fieldset">
+              <legend>Work type <span class="required-mark" aria-hidden="true">*</span></legend>
+              <p class="field-help">Choose every kind of work the mission needs.</p>
+              <div id="work-types" class="check-grid" aria-describedby="work-types-help work-types-error"></div>
+              <p id="work-types-help" class="sr-only">Work type choices are supplied by the local operator.</p>
+              <p id="work-types-error" class="field-error" data-error="work_types" role="alert"></p>
+            </fieldset>
+          </div>
+          <div class="action-row primary-actions">
+            <button id="review-button" type="submit" class="button button-primary">Review prompt</button>
+          </div>
+        </section>
+
+        <section class="form-section disclosure-section">
+          <details id="outcomes-details" class="disclosure">
+            <summary>
+              <span class="summary-kicker">02</span>
+              <span class="summary-copy">
+                <span class="summary-title">Outcomes and context</span>
+                <span class="summary-description">Deliverables, success criteria, constraints, and referenced files.</span>
+              </span>
+            </summary>
+            <div class="disclosure-body">
+              <div class="section-heading">
+                <p class="section-kicker">02</p>
+                <h2 id="outcomes-heading">Outcomes and context</h2>
+                <p>Give the operator enough context to make a useful next move without embedding file contents.</p>
+              </div>
+
+              <div class="field-stack">
+                <div class="field">
+                  <label for="deliverables">Deliverables</label>
+                  <textarea id="deliverables" name="deliverables" rows="4" maxlength="8000" aria-describedby="deliverables-error" placeholder="Files, findings, decisions, or handoffs that should exist when the work is ready."></textarea>
+                  <p id="deliverables-error" class="field-error" data-error="deliverables" role="alert"></p>
+                </div>
+
+                <div class="field">
+                  <label for="success_criteria">Success criteria</label>
+                  <textarea id="success_criteria" name="success_criteria" rows="4" maxlength="8000" aria-describedby="success-criteria-error" placeholder="What evidence would show that the mission is complete enough to hand off?"></textarea>
+                  <p id="success-criteria-error" class="field-error" data-error="success_criteria" role="alert"></p>
+                </div>
+
+                <div class="field">
+                  <label for="constraints">Constraints</label>
+                  <textarea id="constraints" name="constraints" rows="4" maxlength="8000" aria-describedby="constraints-error" placeholder="Boundaries, exclusions, ownership lanes, or implementation limits."></textarea>
+                  <p id="constraints-error" class="field-error" data-error="constraints" role="alert"></p>
+                </div>
+
+                <div class="field">
+                  <label for="context_files">Context-file paths</label>
+                  <textarea id="context_files" name="context_files" rows="4" maxlength="24000" aria-describedby="context-files-help context-files-error" placeholder="One absolute file path per line"></textarea>
+                  <p id="context-files-help" class="field-help">Up to 30 absolute paths. Files are referenced by the prompt; their bodies are not embedded automatically.</p>
+                  <p id="context-files-error" class="field-error" data-error="context_files" role="alert"></p>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="form-section disclosure-section">
+          <details id="limits-details" class="disclosure">
+            <summary>
+              <span class="summary-kicker">03</span>
+              <span class="summary-copy">
+                <span class="summary-title">Operating limits</span>
+                <span class="summary-description">Requested Astra, Luna, and budget ceilings.</span>
+              </span>
+            </summary>
+            <div class="disclosure-body">
+              <div class="section-heading">
+                <p class="section-kicker">03</p>
+                <h2 id="limits-heading">Operating limits</h2>
+                <p>These are requested ceilings and budget instructions. Runtime capacity is checked by the operator.</p>
+              </div>
+
+              <div class="field-grid two-up">
+                <div class="field">
+                  <label for="max_astra">Astra ceiling</label>
+                  <input id="max_astra" name="max_astra" type="number" min="1" max="4" step="1" required aria-describedby="max-astra-help max-astra-error">
+                  <p id="max-astra-help" class="field-help">Requested Astra planning capacity.</p>
+                  <p id="max-astra-error" class="field-error" data-error="max_astra" role="alert"></p>
+                </div>
+
+                <div class="field">
+                  <label for="max_luna">Luna ceiling</label>
+                  <input id="max_luna" name="max_luna" type="number" min="1" max="64" step="1" required aria-describedby="max-luna-help max-luna-error">
+                  <p id="max-luna-help" class="field-help">Requested worker ceiling, subject to runtime availability.</p>
+                  <p id="max-luna-error" class="field-error" data-error="max_luna" role="alert"></p>
+                </div>
+
+                <div class="field">
+                  <label for="budget_mode">Budget mode</label>
+                  <select id="budget_mode" name="budget_mode" aria-describedby="budget-mode-error">
+                    <option value="hours">Hours</option>
+                    <option value="tokens">Tokens</option>
+                    <option value="manual">Manual</option>
+                  </select>
+                  <p id="budget-mode-error" class="field-error" data-error="budget_mode" role="alert"></p>
+                </div>
+
+                <div class="field">
+                  <label for="budget_value">Budget value</label>
+                  <input id="budget_value" name="budget_value" type="number" min="1" step="1" required aria-describedby="budget-value-help budget-value-error">
+                  <p id="budget-value-help" class="field-help">Positive integer. Manual mode leaves this blank.</p>
+                  <p id="budget-value-error" class="field-error" data-error="budget_value" role="alert"></p>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section id="review-section" class="review-section" hidden aria-labelledby="review-heading">
+          <div class="section-heading">
+            <p class="section-kicker">REVIEW</p>
+            <h2 id="review-heading">Generated prompt</h2>
+            <p>The text below is the prompt returned by the local operator. Read it before saving or copying.</p>
+          </div>
+
+          <div id="warning-list" class="warning-list" hidden role="status" aria-live="polite"></div>
+          <pre id="prompt-output" class="prompt-output" tabindex="0" aria-label="Generated mission prompt"></pre>
+
+          <div class="action-row review-actions" aria-label="Prompt actions">
+            <button id="edit-button" type="button" class="button button-secondary">Edit mission</button>
+            <button id="save-button" type="button" class="button button-primary">Save mission</button>
+            <button id="copy-button" type="button" class="button button-secondary">Copy prompt</button>
+            <button id="download-button" type="button" class="button button-secondary">Download prompt</button>
+          </div>
+
+        </section>
+
+      </div>
+
+      <aside class="profile-column" aria-label="Operating profile and saved missions">
+        <section class="side-section profile-section" aria-labelledby="profile-heading">
+          <div class="section-heading compact-heading">
+            <p class="section-kicker">PROFILE</p>
+            <h2 id="profile-heading">Requested operating profile</h2>
+            <p>Fixed roles from the local configuration.</p>
+          </div>
+          <p class="profile-route">Work descends <strong>Astra XHigh → Sol High → Luna Max</strong>; review returns <strong>Luna Max → Sol High → Astra XHigh</strong>.</p>
+          <dl id="model-profile" class="model-profile"></dl>
+        </section>
+
+        <section class="side-section">
+          <details id="pro-details" class="disclosure side-disclosure">
+            <summary>
+              <span class="summary-kicker">PRO WEB</span>
+              <span class="summary-copy">
+                <span class="summary-title">Pro options</span>
+                <span class="summary-description">Ordinary ChatGPT Web permission and message allowance.</span>
+              </span>
+            </summary>
+            <div class="disclosure-body">
+              <div class="section-heading compact-heading">
+                <p class="section-kicker">PRO WEB</p>
+                <h2 id="pro-heading">Ordinary ChatGPT Web</h2>
+                <p>Allow Sol to consult GPT-6 Pro in ordinary ChatGPT Web when available.</p>
+                <p id="pro-model-note" class="profile-model-note">Configured by the local backend.</p>
+              </div>
+              <div class="field-stack compact-fields">
+                <div class="field checkbox-field">
+                  <input id="pro_enabled" name="pro_enabled" type="checkbox" aria-describedby="pro-enabled-error">
+                  <label for="pro_enabled">Enable Pro Web access</label>
+                  <p id="pro-enabled-error" class="field-error" data-error="pro_enabled" role="alert"></p>
+                </div>
+                <div class="field">
+                  <label for="pro_messages">Message allowance</label>
+                  <input id="pro_messages" name="pro_messages" type="number" min="0" max="100" step="1" required aria-describedby="pro-messages-help pro-messages-error">
+                  <p id="pro-messages-help" class="field-help">When enabled, at least one message is required.</p>
+                  <p id="pro-messages-error" class="field-error" data-error="pro_messages" role="alert"></p>
+                </div>
+                <div class="field">
+                  <label for="pro_project">Pro project</label>
+                  <input id="pro_project" name="pro_project" type="text" maxlength="120" aria-describedby="pro-project-error" placeholder="Project name">
+                  <p id="pro-project-error" class="field-error" data-error="pro_project" role="alert"></p>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="side-section">
+          <details id="authority-details" class="disclosure side-disclosure">
+            <summary>
+              <span class="summary-kicker">AUTHORITY</span>
+              <span class="summary-copy">
+                <span class="summary-title">External authority</span>
+                <span class="summary-description">Prepare-only by default; scoped permission is explicit.</span>
+              </span>
+            </summary>
+            <div class="disclosure-body">
+              <div class="section-heading compact-heading">
+                <p class="section-kicker">AUTHORITY</p>
+                <h2 id="authority-heading">External actions</h2>
+                <p>Prepare-only is the default. A scoped mandate records the requested boundary.</p>
+              </div>
+              <div class="field-stack compact-fields">
+                <div class="field">
+                  <label for="external_mode">External mode</label>
+                  <select id="external_mode" name="external_mode" aria-describedby="external-mode-error">
+                    <option value="prepare">Prepare only</option>
+                    <option value="scoped">Scoped permission</option>
+                  </select>
+                  <p id="external-mode-error" class="field-error" data-error="external_mode" role="alert"></p>
+                </div>
+                <div class="field">
+                  <label for="external_scope">Scoped authority</label>
+                  <textarea id="external_scope" name="external_scope" rows="4" maxlength="8000" aria-describedby="external-scope-help external-scope-error" placeholder="Required only for scoped permission"></textarea>
+                  <p id="external-scope-help" class="field-help">Describe the exact action boundary and recipient or destination.</p>
+                  <p id="external-scope-error" class="field-error" data-error="external_scope" role="alert"></p>
+                </div>
+                <div class="field">
+                  <label for="private_boundary">Private boundary</label>
+                  <textarea id="private_boundary" name="private_boundary" rows="4" maxlength="8000" aria-describedby="private-boundary-error" placeholder="Privacy or identity boundaries to preserve"></textarea>
+                  <p id="private-boundary-error" class="field-error" data-error="private_boundary" role="alert"></p>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="side-section saved-section" aria-labelledby="saved-heading">
+          <div class="section-heading compact-heading">
+            <p class="section-kicker">LOCAL RECORDS</p>
+            <h2 id="saved-heading">Saved missions</h2>
+            <p>Open a saved prompt or reuse its fields as a starting point.</p>
+          </div>
+          <div id="saved-state" class="saved-state" role="status" aria-live="polite">Loading saved missions…</div>
+          <ul id="saved-list" class="saved-list"></ul>
+        </section>
+      </aside>
+    </form>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

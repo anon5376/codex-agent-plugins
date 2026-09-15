@@ -1,0 +1,23 @@
+{
+  "name": "overnight-work",
+  "version": "0.1.0",
+  "description": "Run and resume sustained project work with a durable task ledger, bounded attempts, evidence checks, and morning handoffs.",
+  "author": {
+    "name": "anon5376"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Overnight Work",
+    "shortDescription": "Sustained work with recoverable state and a clear handoff.",
+    "longDescription": "Run and resume scoped project work while tracking ownership, dependencies, evidence, leases, and external-action receipts with a standard-library ledger.",
+    "developerName": "anon5376",
+    "category": "Productivity",
+    "capabilities": ["Write"],
+    "defaultPrompt": [
+      "Finish my authorized project work overnight.",
+      "Resume my overnight run and verify the remaining tasks.",
+      "Prepare research, website fixes, and contact drafts while I am away."
+    ],
+    "brandColor": "#1F6F5B"
+  }
+}

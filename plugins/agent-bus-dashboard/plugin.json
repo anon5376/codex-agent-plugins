@@ -1,0 +1,33 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agent-bus-dashboard",
+  "version": "0.3.0",
+  "description": "Operate existing local AgentBus and Agent Coordinator services from Codex and a unified loopback dashboard.",
+  "author": {
+    "name": "anon5376",
+    "url": "https://github.com/anon5376"
+  },
+  "homepage": "https://github.com/anon5376/codex-agent-plugins/tree/main/plugins/agent-bus-dashboard",
+  "repository": "https://github.com/anon5376/codex-agent-plugins",
+  "license": "MIT",
+  "keywords": ["agents", "dashboard", "mcp", "agent-bus", "local-first"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Agent Bus Dashboard",
+        "shortDescription": "A local switchboard for projects, agents, usage, and messages.",
+        "longDescription": "Connect Codex to existing Agent Coordinator and AgentBus services and operate them from a dependency-free loopback dashboard with project navigation, live status, supervision controls, usage, tasks, and conversation history.",
+        "developerName": "anon5376",
+        "category": "Developer Tools",
+        "capabilities": ["Read", "Write", "Interactive", "Local MCP"],
+        "websiteURL": "https://github.com/anon5376/codex-agent-plugins/tree/main/plugins/agent-bus-dashboard",
+        "defaultPrompt": [
+          "Open my local agent dashboard.",
+          "Show agents in the selected project.",
+          "Show the complete AgentBus conversation history."
+        ],
+        "brandColor": "#2A78D6"
+      }
+    }
+  }
+}

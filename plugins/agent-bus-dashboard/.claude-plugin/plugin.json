@@ -1,0 +1,10 @@
+{
+  "name": "agent-bus-dashboard",
+  "version": "0.3.0",
+  "description": "Operate existing local Agent Coordinator and AgentBus services from Claude Code and a unified loopback dashboard.",
+  "author": {
+    "name": "anon5376"
+  },
+  "keywords": ["agents", "dashboard", "mcp", "agent-bus", "local"],
+  "skills": "./skills/"
+}

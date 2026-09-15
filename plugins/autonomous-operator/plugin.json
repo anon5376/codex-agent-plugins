@@ -1,0 +1,33 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "autonomous-operator",
+  "version": "0.1.0",
+  "description": "Prepare bounded mission prompts and coordinate scoped work with Astra, Sol, Luna, and optional GPT-6 Pro Web.",
+  "author": {
+    "name": "anon5376",
+    "url": "https://github.com/anon5376"
+  },
+  "homepage": "https://github.com/anon5376/codex-agent-plugins/tree/main/plugins/autonomous-operator",
+  "repository": "https://github.com/anon5376/codex-agent-plugins",
+  "license": "MIT",
+  "keywords": ["agents", "orchestration", "missions", "codex", "local-first"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Autonomous Operator",
+        "shortDescription": "Build precise, bounded multi-agent missions.",
+        "longDescription": "Create a scoped mission prompt with outcomes, worker limits, review routing, GPT-6 Pro Web allowance, and action authority. Review it, save it locally, then copy or download it. The form does not start agents or grant authority by itself.",
+        "developerName": "anon5376",
+        "category": "Productivity",
+        "capabilities": ["Write"],
+        "websiteURL": "https://github.com/anon5376/codex-agent-plugins/tree/main/plugins/autonomous-operator",
+        "defaultPrompt": [
+          "Open the local Autonomous Operator mission form.",
+          "Use $autonomous-operator to execute my scoped mission.",
+          "Use $autonomous-operator to continue my saved mission from its current evidence."
+        ],
+        "brandColor": "#7969FF"
+      }
+    }
+  }
+}

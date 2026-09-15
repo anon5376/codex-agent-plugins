@@ -1,0 +1,44 @@
+{
+  "name": "codex-agent-plugins",
+  "interface": {
+    "displayName": "Codex Agent Plugins"
+  },
+  "plugins": [
+    {
+      "name": "autonomous-operator",
+      "source": {
+        "source": "local",
+        "path": "./plugins/autonomous-operator"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "overnight-work",
+      "source": {
+        "source": "local",
+        "path": "./plugins/overnight-work"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "agent-bus-dashboard",
+      "source": {
+        "source": "local",
+        "path": "./plugins/agent-bus-dashboard"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

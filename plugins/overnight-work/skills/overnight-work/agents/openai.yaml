@@ -1,0 +1,4 @@
+interface:
+  display_name: "Overnight Work"
+  short_description: "Resume sustained work and deliver a clear morning handoff"
+  default_prompt: "Use $overnight-work to finish my authorized project tasks while I am away and leave a concise handoff."

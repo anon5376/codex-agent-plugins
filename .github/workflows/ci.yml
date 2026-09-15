@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Validate JSON
+        run: |
+          python -m json.tool .agents/plugins/marketplace.json >/dev/null
+          find plugins -name '*.json' -type f -print0 | xargs -0 -n1 python -m json.tool >/dev/null
+      - name: Test Autonomous Operator
+        working-directory: plugins/autonomous-operator
+        run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Test Overnight Work
+        working-directory: plugins/overnight-work
+        run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Test Agent Bus Dashboard
+        working-directory: plugins/agent-bus-dashboard
+        run: |
+          qa_root="$RUNNER_TEMP/agent-bus-dashboard"
+          mkdir -p "$qa_root/projects" "$qa_root/bus"
+          python scripts/dashboard_server.py --check \
+            --config "$qa_root/dashboard.json" \
+            --dashboard-state "$qa_root/state.json" \
+            --projects-root "$qa_root/projects" \
+            --agent-bus-root "$qa_root/bus" \
+            --live-bus-url http://127.0.0.1:65530

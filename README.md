@@ -1,5 +1,7 @@
 # Codex Agent Plugins
 
+[![CI](https://github.com/anon5376/codex-agent-plugins/actions/workflows/ci.yml/badge.svg)](https://github.com/anon5376/codex-agent-plugins/actions/workflows/ci.yml)
+
 Three local-first plugins for planning, sustained execution, and multi-agent operations. They are packaged as portable Agent Plugins with Codex compatibility manifests and distributed from one GitHub marketplace.
 
 | Plugin | What it does | Runtime |

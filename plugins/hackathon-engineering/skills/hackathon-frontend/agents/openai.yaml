@@ -1,0 +1,4 @@
+interface:
+  display_name: "Make the Demo Usable"
+  short_description: "Make the Demo Usable for short, reliable builds"
+  default_prompt: "Use $hackathon-frontend for this hackathon task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Coordinate Bounded Work"
+  short_description: "Coordinate Bounded Work for short, reliable builds"
+  default_prompt: "Use $hackathon-coordination for this hackathon task."

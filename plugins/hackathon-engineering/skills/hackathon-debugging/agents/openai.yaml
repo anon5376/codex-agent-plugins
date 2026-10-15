@@ -1,0 +1,4 @@
+interface:
+  display_name: "Diagnose Before Patching"
+  short_description: "Diagnose Before Patching for short, reliable builds"
+  default_prompt: "Use $hackathon-debugging for this hackathon task."

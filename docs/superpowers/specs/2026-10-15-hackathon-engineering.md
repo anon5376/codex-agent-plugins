@@ -1,0 +1,13 @@
+# Hackathon Engineering Kit
+
+Build a reusable Codex-only development tool for a two-person, 210-minute event, not a prebuilt competition entry. Add an independent plugin to this repository. Use Python 3.11+ standard library and installed official `codex exec`; no paid manager model or framework dependency.
+
+Defaults: GPT-6.1 Sol, low reasoning, standard service, at most two concurrent worker processes, twelve attempts, one attempt per task, 195-minute session ceiling and 15-minute task ceiling. Track input, cached input and output tokens separately. Enforce a conservative dispatch reservation against observed total tokens. Usage arrives after work: this is not a provider-enforced dollar cap and can overshoot before an event arrives. Never silently fall back to another model, provider, fast tier or API-key authentication.
+
+Run dry by default. Live work requires --live. Doctor performs only CLI/version/auth checks. Strip API-key/base-URL environment overrides from worker and verification subprocesses; reuse the local Codex login without reading credentials. Use explicit bounded CLI sandbox/config, no bypass flags. Do not run live inference while preparing the kit.
+
+Use a JSON DAG with unique task IDs, declared write paths, selected skills, setup commands and verification commands (argv arrays, no shell). Validate paths, cycles and limits before dispatch. Each task has a separate detached Git worktree. Scheduler respects dependencies and overlapping ownership. Only verified, scope-compliant patches can enter a separate integration worktree. The original checkout and branch stay untouched. Recheck the task after applying its patch to integration; on failure roll back only that owned integration change. Do not publish or deploy automatically.
+
+Persist atomic state, plan hash, base revision, task status, attempt counts, cumulative time and usage. An exclusive file lock rejects concurrent controllers. Resume never repeats integrated tasks; interrupted attempts need explicit operator reset and retain budget usage. Stop dispatch on unknown usage, timeout, global limits or Ctrl-C. Preserve logs and failed worktrees. Live successful runs require complete-turn usage events. CLI failure, malformed output, missing usage, failed tests and integration conflicts never become success.
+
+Provide six compact repo/plugin skills: scope-to-slice, contract-first implementation, root-cause debugging, verification with evidence, usable frontend states, and bounded coordination. Load only selected skill bodies into each worker prompt. Include event-day instructions, a RECON task plan containing instructions only, and offline integration tests with an explicit fake Codex process. Make no claims that official event rules have approved this tool.

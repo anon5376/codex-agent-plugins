@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ship One Vertical Slice"
+  short_description: "Ship One Vertical Slice for short, reliable builds"
+  default_prompt: "Use $hackathon-slice for this hackathon task."

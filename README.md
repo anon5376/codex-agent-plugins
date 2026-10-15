@@ -2,13 +2,14 @@
 
 [![CI](https://github.com/anon5376/codex-agent-plugins/actions/workflows/ci.yml/badge.svg)](https://github.com/anon5376/codex-agent-plugins/actions/workflows/ci.yml)
 
-Three local-first plugins for planning, sustained execution, and multi-agent operations. They are packaged as portable Agent Plugins with Codex compatibility manifests and distributed from one GitHub marketplace.
+Four local-first plugins for planning, sustained execution, multi-agent operations, and bounded hackathon development. They are packaged as portable Agent Plugins with Codex compatibility manifests and distributed from one GitHub marketplace.
 
 | Plugin | What it does | Runtime |
 | --- | --- | --- |
 | [Autonomous Operator](plugins/autonomous-operator) | Builds bounded mission prompts for an Astra → Sol → Luna execution and reverse-review loop. | Python 3.9+, standard library |
 | [Overnight Work](plugins/overnight-work) | Runs or resumes sustained work with a durable task ledger, evidence checks, and a morning handoff. | Python 3.9+, standard library |
 | [Agent Bus Dashboard](plugins/agent-bus-dashboard) | Operates existing local AgentBus and Agent Coordinator services from a loopback dashboard and MCP launchers. | Python 3.9+, existing AgentBus/Coordinator install |
+| [Hackathon Engineering](plugins/hackathon-engineering) | Coordinates two isolated Codex workers with verification gates, durable limits, and six compact engineering skills. | Python 3.11+, Git, Codex CLI 0.162.1+ |
 
 ## Install
 
@@ -24,6 +25,7 @@ Then install any plugin:
 codex plugin add autonomous-operator@codex-agent-plugins
 codex plugin add overnight-work@codex-agent-plugins
 codex plugin add agent-bus-dashboard@codex-agent-plugins
+codex plugin add hackathon-engineering@codex-agent-plugins
 ```
 
 Restart the ChatGPT desktop app after installation so newly installed skills are discovered.

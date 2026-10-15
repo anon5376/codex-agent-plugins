@@ -1,0 +1,35 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "hackathon-engineering",
+  "version": "0.1.0",
+  "description": "Bounded Codex-only engineering for a two-person hackathon: isolated workers, checks, token telemetry and compact skills.",
+  "author": {
+    "name": "anon5376"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/anon5376/codex-agent-plugins",
+  "homepage": "https://github.com/anon5376/codex-agent-plugins/tree/feat/hackathon-engineering/plugins/hackathon-engineering",
+  "keywords": [
+    "codex",
+    "hackathon",
+    "engineering",
+    "orchestration"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Hackathon Engineering",
+        "shortDescription": "Build quickly with bounded Codex workers and evidence.",
+        "developerName": "anon5376",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "defaultPrompt": [
+          "Use the hackathon kit to build the next agreed vertical slice."
+        ]
+      }
+    }
+  }
+}

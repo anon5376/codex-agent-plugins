@@ -1,0 +1,282 @@
+{
+  "version": 1,
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "limits": {
+    "max_parallel": 2,
+    "max_attempts": 12,
+    "max_observed_tokens": 300000,
+    "launch_reserve_tokens": 50000,
+    "session_seconds": 11700,
+    "task_seconds": 900,
+    "verification_seconds": 180
+  },
+  "tasks": [
+    {
+      "id": "scaffold",
+      "goal": "During the event create the smallest Next.js TypeScript shell for the agreed RECON brief. Establish npm run check (type checking), npm test (a real deterministic test runner), and npm run build. The domain contract and behavior are separate later tasks. Include a minimal rendered page. Avoid authentication, database or extra frameworks. Ensure generated build/cache directories and node_modules are ignored. Record the exact install and local start commands.",
+      "write_paths": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "next-env.d.ts",
+        "next.config.ts",
+        "next.config.mjs",
+        ".gitignore",
+        "eslint.config.mjs",
+        "postcss.config.mjs",
+        "app/layout.tsx",
+        "app/page.tsx",
+        "app/globals.css",
+        "public/",
+        "tests/scaffold/"
+      ],
+      "depends_on": [],
+      "skills": [
+        "hackathon-slice",
+        "hackathon-verification"
+      ],
+      "prepare": [],
+      "verify": [
+        [
+          "npm",
+          "run",
+          "check"
+        ],
+        [
+          "npm",
+          "test"
+        ],
+        [
+          "npm",
+          "run",
+          "build"
+        ]
+      ]
+    },
+    {
+      "id": "contract",
+      "goal": "Create shared strict types/schemas for Input(cartUnits integer 0..20, member boolean, express boolean), additive Program(baseUnits, at most six bounded conditional delta rules), observations, step request and step decision. Every field required; reject unknown fields. Coordinate through this contract only. Add meaningful tests for bounds and malformed inputs. Do not implement calculator or inference.",
+      "write_paths": [
+        "lib/contract.ts",
+        "tests/contract/"
+      ],
+      "depends_on": [
+        "scaffold"
+      ],
+      "skills": [
+        "hackathon-contracts",
+        "hackathon-verification"
+      ],
+      "prepare": [
+        [
+          "npm",
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ]
+      ],
+      "verify": [
+        [
+          "npm",
+          "run",
+          "check"
+        ],
+        [
+          "npm",
+          "test"
+        ]
+      ]
+    },
+    {
+      "id": "engine",
+      "goal": "Implement the agreed owned shipping-calculator family separately from the restricted interpreter; enumerate 84 inputs, compare actual outputs and return mismatches, exact scope and configuration ID. Use shared contract. Add real boundary/invariant tests. Default base6 threshold12 express4; the explicitly human-written naive baseline matches54/fails30; changing a correct threshold12 version to threshold9 changes6 cases. Include export serialization using the same interpreter, not generated arbitrary code. No model calls or UI.",
+      "write_paths": [
+        "lib/engine/",
+        "tests/engine/"
+      ],
+      "depends_on": [
+        "contract"
+      ],
+      "skills": [
+        "hackathon-contracts",
+        "hackathon-verification"
+      ],
+      "prepare": [
+        [
+          "npm",
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ]
+      ],
+      "verify": [
+        [
+          "npm",
+          "run",
+          "check"
+        ],
+        [
+          "npm",
+          "test"
+        ]
+      ]
+    },
+    {
+      "id": "ui",
+      "goal": "Build one usable page against the shared contract: original/rules panels, judge settings, selected-case comparison, 84-cell grid, real loading/error/timeout/reset states, separate learning/check counters, receipts, export and explicitly recorded replay. Use labeled fixtures until live integration. Never show fabricated progress or unconditional success. Use graphite/off-white with one accent and clear keyboard focus. Do not edit shared types, layout or dependency manifests.",
+      "write_paths": [
+        "app/page.tsx",
+        "app/globals.css",
+        "app/components/",
+        "tests/ui/"
+      ],
+      "depends_on": [
+        "contract"
+      ],
+      "skills": [
+        "hackathon-frontend",
+        "hackathon-verification"
+      ],
+      "prepare": [
+        [
+          "npm",
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ]
+      ],
+      "verify": [
+        [
+          "npm",
+          "run",
+          "check"
+        ],
+        [
+          "npm",
+          "test"
+        ]
+      ]
+    },
+    {
+      "id": "api",
+      "goal": "Using the shared contract, implement the narrow server-side structured-output step endpoint for the agreed OpenAI Responses integration. Verify current official model/SDK signatures before coding. API key stays server-side. Requests must contain observations and grammar, never oracle source or judge settings. Bound body size and validate queries; at most4 queries per step and3 model calls per session. Support timeout, incomplete/refused output and malformed results. Do not make live paid calls without the event operator configuring a dedicated API project. Use a test double only at the external model boundary; clearly distinguish those tests from live inference.",
+      "write_paths": [
+        "app/api/",
+        "lib/model/",
+        "tests/api/"
+      ],
+      "depends_on": [
+        "engine"
+      ],
+      "skills": [
+        "hackathon-contracts",
+        "hackathon-debugging",
+        "hackathon-verification"
+      ],
+      "prepare": [
+        [
+          "npm",
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ]
+      ],
+      "verify": [
+        [
+          "npm",
+          "run",
+          "check"
+        ],
+        [
+          "npm",
+          "test"
+        ]
+      ]
+    },
+    {
+      "id": "connect",
+      "goal": "Wire the existing page to the real engine and step endpoint. Reuse the reviewed shared contract and interpreter. Invalidate stale audit badges when settings change; enforce session request limits; label recorded reconstruction while rerunning comparison live. Verify reset, export and failed-network paths. Do not add features, change API or engine contracts, or perform deployment.",
+      "write_paths": [
+        "app/page.tsx",
+        "app/components/",
+        "tests/integration/"
+      ],
+      "depends_on": [
+        "ui",
+        "api"
+      ],
+      "skills": [
+        "hackathon-frontend",
+        "hackathon-debugging",
+        "hackathon-verification"
+      ],
+      "prepare": [
+        [
+          "npm",
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ]
+      ],
+      "verify": [
+        [
+          "npm",
+          "run",
+          "check"
+        ],
+        [
+          "npm",
+          "test"
+        ],
+        [
+          "npm",
+          "run",
+          "build"
+        ]
+      ]
+    },
+    {
+      "id": "review",
+      "goal": "Inspect the complete integrated revision read-only. Run required checks, inspect output labels and counters, confirm oracle settings are excluded from model requests, and verify export uses the same interpreter. Identify specific remaining correctness/demo failures with file locations and commands. Do not edit files or claim live model coverage unless a real event-day call was recorded. Give a concise90-second demo script and manual deployment checklist; do not deploy. ",
+      "write_paths": [],
+      "depends_on": [
+        "connect"
+      ],
+      "skills": [
+        "hackathon-coordination",
+        "hackathon-verification"
+      ],
+      "prepare": [
+        [
+          "npm",
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ]
+      ],
+      "verify": [
+        [
+          "npm",
+          "run",
+          "check"
+        ],
+        [
+          "npm",
+          "test"
+        ],
+        [
+          "npm",
+          "run",
+          "build"
+        ]
+      ]
+    }
+  ]
+}

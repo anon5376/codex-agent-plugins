@@ -1,0 +1,22 @@
+{
+  "name": "hackathon-engineering",
+  "version": "0.1.0",
+  "description": "Bounded Codex-only engineering for a two-person hackathon: isolated workers, checks, token telemetry and compact skills.",
+  "author": {
+    "name": "anon5376"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Hackathon Engineering",
+    "shortDescription": "Build quickly with bounded Codex workers and evidence.",
+    "developerName": "anon5376",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use the hackathon kit to build the next agreed vertical slice."
+    ]
+  }
+}

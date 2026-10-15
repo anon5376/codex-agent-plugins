@@ -25,6 +25,9 @@ jobs:
       - name: Test Overnight Work
         working-directory: plugins/overnight-work
         run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Test Hackathon Engineering
+        working-directory: plugins/hackathon-engineering
+        run: python -m unittest discover -s tests -p 'test_*.py'
       - name: Test Agent Bus Dashboard
         working-directory: plugins/agent-bus-dashboard
         run: |

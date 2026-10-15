@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Against Clear Contracts"
+  short_description: "Build Against Clear Contracts for short, reliable builds"
+  default_prompt: "Use $hackathon-contracts for this hackathon task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verify What Will Ship"
+  short_description: "Verify What Will Ship for short, reliable builds"
+  default_prompt: "Use $hackathon-verification for this hackathon task."
